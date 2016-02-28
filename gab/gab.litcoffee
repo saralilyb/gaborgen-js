@@ -37,7 +37,7 @@ Lay groundwork. Right now this assumes square gabor patches. This makes heavy us
 	#b = math.sin(deg2rad(tilt)) * sf * 360
 	a = math.cos(math.unit(tilt, 'deg')) * sf * 360
 	b = math.sin(math.unit(tilt, 'deg')) * sf * 360
-	multConst = 1 / math.sqrt(2 * math.pi) * sc
+	multConst = 1 / (math.sqrt(2 * math.pi) * sc)
 	varScale = 2 * math.pow(sc, 2)
 	gridArray = math.range(0, reso)._data # that last bit is b/c mathjs is weird
 	[gab_x, gab_y] = meshgrid(gridArray)
@@ -48,7 +48,7 @@ Lay groundwork. Right now this assumes square gabor patches. This makes heavy us
 	preSinWave = math.add(math.add(math.multiply(a, x_centered), math.multiply(b, y_centered)), phase)
 	sinWave = math.sin math.map(preSinWave, (value) ->
 		math.unit(value, 'deg').value)
-	# m =
+	m = math.add(.5, math.multiply(contrast, math.transpose(math.dotMultiply(math.multiply(multConst, math.exp(math.add(math.divide(x_factor, varScale), math.divide(y_factor, varScale)))), sinWave))))
 
 # Display the picture.
 
