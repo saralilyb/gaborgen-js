@@ -2,9 +2,37 @@ This is a jsPsych experiment that procedurally generates a Gabor patch based on 
 
 	# psiturk = new PsiTurk uniqueId, adServerLoc, mode
 
+# The gabor part
 
 Now we want to create a function that generates Gabor patches. It will do this using the DOM, somehow.
 
+
+	blue_circle = '
+								<style>
+								circle {
+								fill: #333;
+								}
+								</style>
+								<svg width="960" height="500">
+								<circle cx="480" cy="250" r="200"/>
+								</svg>
+								<script src="//d3js.org/d3.v3.min.js"></script>
+								<script>
+								setInterval(function() {
+								d3.select("circle")
+								.style("fill", d3.hcl(Math.random() * 360, 100, 50))
+								.transition()
+								.duration(2000)
+								.style("fill", function() {
+								var that = d3.select(this),
+								fill0 = that.style("fill"),
+								fill1 = that.style("fill", null).style("fill");
+								that.style("fill", fill0);
+								return fill1;
+								});
+								}, 2500);
+								</script>
+								'
 
 
 This block describes stimuli.
