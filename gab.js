@@ -42,7 +42,6 @@ gaborgen = function(tilt, sf) {
   sinWave = numeric.sin(preSinWave);
   m = numeric.add(.5, numeric.mul(contrast, numeric.transpose(numeric.mul(numeric.mul(multConst, numeric.exp(numeric.add(numeric.div(x_factor, varScale), numeric.div(y_factor, varScale)))), sinWave))));
   scaledM = rescale(m, 0, 255);
-  scaledM = numeric.transpose(scaledM);
   return $('#gab-target').html('<img src="' + numeric.imageURL([scaledM, scaledM, scaledM]) + '"/>');
 };
 
@@ -52,29 +51,9 @@ deg2rad = function(degrees) {
   return (degrees * pi) / 180;
 };
 
-arrmax = function(arrs) {
-  var i, l, toplevel;
-  toplevel = [];
-  i = 0;
-  l = arrs.length;
-  while (i < l) {
-    toplevel.push(Math.max.apply(window, arrs[i]));
-    i++;
-  }
-  return Math.max.apply(window, toplevel);
-};
+arrmax = numeric.mapreduce('if(xi > accum) accum=xi;', '-Infinity');
 
-arrmin = function(arrs) {
-  var i, l, toplevel;
-  toplevel = [];
-  i = 0;
-  l = arrs.length;
-  while (i < l) {
-    toplevel.push(Math.min.apply(window, arrs[i]));
-    i++;
-  }
-  return Math.min.apply(window, toplevel);
-};
+arrmin = numeric.mapreduce('if(xi < accum) accum=xi;', 'Infinity');
 
 meshgrid = function(value) {
   var i, m, value_length;

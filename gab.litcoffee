@@ -46,8 +46,6 @@ More calculations.
 		x_factor = numeric.mul(numeric.pow(x_centered, 2), -1)
 		y_factor = numeric.mul(numeric.pow(y_centered, 2), -1)
 		preSinWave = numeric.add(numeric.add(numeric.mul(a, x_centered), numeric.mul(b, y_centered)), phase)
-		# sinWave = math.sin math.map(preSinWave, (value) ->
-		# 	math.unit(value, 'deg').value)
 
 I'm not sure how to `map` in numeric.js. This just converts degrees to radians throughout the matrix.
 
@@ -67,28 +65,11 @@ There. Now, let's continue.
 Now we have a matrix of values. Matlab has the wonderful and magical `imshow` command that just takes the matrix and makes a picture. We have to do that magic ourselves. So to use the matrix `m` in the pnglib code below, we have to rescale all the values to be between 0 and 255, the intensity values for each pixel. Finally, we rescale the image matrix to be between 0 and 255.
 
 		scaledM = rescale(m, 0, 255)
-		scaledM = numeric.transpose(scaledM)
 
 # Display the picture.
 
-Now we create a PNG element and loop through it, changing each pixel's color. Uses [PNGlib](http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/), which has a BSD license.
+Finally, write it out to the DOM. Numeric has a function that returns the base64 version of a PNG. It's kinda malformed because MATLAB doesn't want to import it, and it's slightly different from PNGlib's, but it's twice as fast.
 
-		# p = new PNGlib(reso, reso, 256)
-		# # construcor takes height, weight and color-depth
-		# background = p.color(0, 0, 0, 0)
-		# # set the background transparent
-		# i = 0
-		# while i < reso
-		# 	j = 0
-		# 	while j < reso
-		# 		grayval = scaledM[i][j]
-		# 		p.buffer[p.index(i, j)] = p.color(grayval, grayval, grayval)
-		# 		j++
-		# 	i++
-
-Finally, write it out to the DOM.
-
-		# $('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">')
 		$('#gab-target').html('<img src="' + numeric.imageURL([scaledM,scaledM,scaledM]) + '"/>')
 
 ## Helper functions
@@ -99,24 +80,10 @@ Start with some helper functions. This function converts degrees to radians.
 	deg2rad = (degrees) ->
 		(degrees * pi) / 180
 
-The following are done up to dig into nested arrays and find the max or min values in them. From [StackOverflow](http://stackoverflow.com/questions/10564441/how-to-find-the-max-min-of-a-nested-array-in-javascript).
+The following are done up to dig into nested arrays and find the max or min values in them. These return *very* efficient functions.
 
-	arrmax = (arrs) ->
-		toplevel = []
-		i = 0
-		l = arrs.length
-		while i < l
-			toplevel.push Math.max.apply(window, arrs[i])
-			i++
-		Math.max.apply window, toplevel
-	arrmin = (arrs) ->
-		toplevel = []
-		i = 0
-		l = arrs.length
-		while i < l
-			toplevel.push Math.min.apply(window, arrs[i])
-			i++
-		Math.min.apply window, toplevel
+	arrmax = numeric.mapreduce('if(xi > accum) accum=xi;','-Infinity');
+	arrmin = numeric.mapreduce('if(xi < accum) accum=xi;','Infinity');
 
 `meshgrid` takes an array then replicates it `l` times and returns a matrix, where `l` is the array's length.
 
