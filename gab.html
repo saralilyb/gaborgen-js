@@ -8,7 +8,7 @@
 		<script src="numeric.min.js"></script>
 		<script src="jquery-min.js" type="text/javascript"></script>
 		<script src="jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="css/jquery-ui.css">
+		<link rel="stylesheet" href="css/jquery-ui.min.css">
 		<script src="gab.js"></script>
 		<script>
 		  $(function() {
@@ -42,20 +42,21 @@
 		</script>
 	</head>
 	<body>
-		<p>
-  		<label for="rotation">rotation:</label>
-  		<input type="text" id="rotation" readonly style="border:0; color:#f6931f; font-weight:bold;">
-		</p>
-		<div id="rotation-slider" align="center" style="width:300px; text-align: center;"></div>
-		<p>
-			<label for="frequency">frequency:</label>
-			<input type="text" id="frequency" readonly style="border:0; color:#f6931f; font-weight:bold;">
-		</p>
-		<div id="frequency-slider" align="center" style="width:300px; text-align: center;"></div>
-		<br/>
-		<br/>
-		<div id='gab-target', align="center", style="text-align: center;"></div>
-
+		<div id="content" style="width:400px; margin-left:auto; margin-right:auto;">
+			<p>
+	  		<label for="rotation">rotation:</label>
+	  		<input type="text" id="rotation" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			</p>
+			<div id="rotation-slider" align="center" style="width:400px; text-align: center;"></div>
+			<p>
+				<label for="frequency">frequency:</label>
+				<input type="text" id="frequency" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			</p>
+			<div id="frequency-slider" align="center" style="width:400px; text-align: center;"></div>
+			<br/>
+			<br/>
+			<div id='gab-target', align="center", style="text-align: center;"></div>
+		</div>
 		<script>
 			gaborgen(50, 50); // initialize
 		</script>
