@@ -10,7 +10,6 @@ Start with a function definition. This takes a value for rotation and frequency.
 
 Constants:
 
-
 		reso = 400 # should be 400, lowered for testing
 		phase = 0
 		sc = 50.0
@@ -70,7 +69,10 @@ Now we create a PNG element and loop through it, changing each pixel's color. Us
 				p.buffer[p.index(i, j)] = p.color(grayval, grayval, grayval)
 				j++
 			i++
-		'<img src="data:image/png;base64,' + p.getBase64() + '">'
+
+Finally, write it out to the DOM.
+
+		$('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">')
 
 ## Helper functions
 
@@ -121,9 +123,3 @@ The first function is a core function we'll wrap up for clarity. This is based o
 		numeric.add(numeric.mul(b - a, numeric.div(numeric.sub(y, m), M - m)), a)
 	rescale = (y, a, b) ->
 		rescale_core(y, a, b, arrmin(y), arrmax(y))
-
-## Write to the DOM
-
-And finally write the output to the DOM element.
-
-	$('#gab-target').html(gaborgen(75, .05))

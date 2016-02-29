@@ -7,17 +7,73 @@
 		<!-- <script src="math.min.js"></script>  -->
 		<script src="numeric.min.js"></script>
 		<script src="jquery-min.js" type="text/javascript"></script>
-
+		<script src="jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="css/jquery-ui.css">
+		<script src="gab.js"></script>
+		<script>
+			$(function() {
+    		$( "input[type=submit], a, button" )
+      		.button()
+      		.click(function( event ) {
+						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+        		event.preventDefault();
+      	});
+  		});
+		  $(function() {
+		    $( "#frequency-slider" ).slider({
+		      range: "max",
+		      min: .01,
+		      max: .1,
+		      value: .05,
+					step: .005,
+		      slide: function( event, ui ) {
+		        $( "#frequency" ).val( ui.value );
+						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+		      }
+		    });
+		    $( "#frequency" ).val( $( "#frequency-slider" ).slider( "value" ) );
+		  });
+			$(function() {
+				$( "#rotation-slider" ).slider({
+					range: "max",
+					min: 0,
+					max: 90,
+					value: 45,
+					step: 1,
+					slide: function( event, ui ) {
+						$( "#rotation" ).val( ui.value );
+						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+					}
+				});
+				$( "#rotation" ).val( $( "#rotation-slider" ).slider( "value" ) );
+			});
+		</script>
 	</head>
 	<body>
+		<p>
+  		<label for="rotation">rotation:</label>
+  		<input type="text" id="rotation" readonly style="border:0; color:#f6931f; font-weight:bold;">
+		</p>
+		<div id="rotation-slider" align="center" style="width:300px; text-align: center;"></div>
+		<p>
+			<label for="frequency">frequency:</label>
+			<input type="text" id="frequency" readonly style="border:0; color:#f6931f; font-weight:bold;">
+		</p>
+		<div id="frequency-slider" align="center" style="width:300px; text-align: center;"></div>
+		<br/>
+		<input type="submit" value="generate"></input>
+		<br/>
 		<div id='gab-target', align="center", style="text-align: center;"></div>
+
+		<script>
+			gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+		</script>
+
 		<noscript>
 					<h1>Warning: Javascript seems to be disabled</h1>
 					<p>This website requires that Javascript be enabled on your browser.</p>
 					<p>Instructions for enabling Javascript in your browser can be found
 					<a href="http://support.google.com/bin/answer.py?hl=en&answer=23852">here</a><p>
 		</noscript>
-		<script src="gab.js"></script>
 	</body>
-
 </html>

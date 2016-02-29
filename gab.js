@@ -46,7 +46,7 @@ gaborgen = function(tilt, sf) {
     }
     i++;
   }
-  return '<img src="data:image/png;base64,' + p.getBase64() + '">';
+  return $('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">');
 };
 
 pi = 3.1416;
@@ -107,5 +107,3 @@ rescale_core = function(y, a, b, m, M) {
 rescale = function(y, a, b) {
   return rescale_core(y, a, b, arrmin(y), arrmax(y));
 };
-
-$('#gab-target').html(gaborgen(75, .05));
