@@ -1,3 +1,7 @@
+# WARNING
+
+This was my first implementation in MathJS. It's hundreds of times slower compared to the numericjs one, but I'll leave it here for reference.
+
 # Gabor patch generator
 
 Uses [PNGlib](http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/), which has a BSD license.
