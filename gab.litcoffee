@@ -2,15 +2,19 @@
 
 TODO:
 
-- Make gaborgen take frequency and rotation values 0 to 100 instead of specific values within their given scale. 
+- Make gaborgen take frequency and rotation values 0 to 100 instead of specific values within their given scale.
 
 ## The main generating function
 
 Lay groundwork. Right now this assumes square gabor patches. This makes heavy use of [numeric.js](http://numeric.js). This is a construction based on the OCTAVE/MATLAB code from Wikipedia.
 
-Start with a function definition. This takes a value for rotation and frequency.
+Start with a function definition. This takes takes values for rotation and frequency from 0 to 100, scaling them within the ranges defined below.
 
 	gaborgen = (tilt, sf) ->
+
+Check inputs to make sure they're between 1 and 100, a standardized range.
+
+		console.log "ERROR: gaborgen arguenment input out of bounds" if (tilt > 100 or tilt < 1) or (sf > 100 or sf < 1)
 
 Constants:
 
@@ -21,6 +25,18 @@ Constants:
 		aspectratio = 1.0
 		#tilt = 45 # ranges from 0 to 90
 		#sf = .07 # ranges from .01 to .1
+		tilt_min = 0 # degrees
+		tilt_max = 90
+		sf_min = .01
+		sf_max = .1
+
+Now we want to rescale the inputs to the values needed in the equation. These functions are defined below.
+
+		tilt = rescale_core(tilt, tilt_min, tilt_max, 1, 100)
+		sf = rescale_core(sf, sf_min, sf_max, 1, 100)
+
+More calculations.
+
 		x = reso / 2
 		y = reso / 2
 		a = numeric.cos([deg2rad(tilt)]) * sf * 360
@@ -37,7 +53,7 @@ Constants:
 		# sinWave = math.sin math.map(preSinWave, (value) ->
 		# 	math.unit(value, 'deg').value)
 
-I'm not sure how to `map` in numeric.js.
+I'm not sure how to `map` in numeric.js. This just converts degrees to radians throughout the matrix.
 
 		i = 0
 		while i < reso
@@ -88,24 +104,40 @@ Start with some helper functions. This function converts degrees to radians.
 
 The following are done up to dig into nested arrays. From [StackOverflow](http://stackoverflow.com/questions/10564441/how-to-find-the-max-min-of-a-nested-array-in-javascript).
 
+	# arrmax = (arrs) ->
+	# 	toplevel = []
+	# 	f = (v) ->
+	# 		!isNaN(v)
+	# 	i = 0
+	# 	l = arrs.length
+	# 	while i < l
+	# 		toplevel.push Math.max.apply(window, arrs[i].filter(f))
+	# 		i++
+	# 	Math.max.apply window, toplevel
+	# arrmin = (arrs) ->
+	# 	toplevel = []
+	# 	f = (v) ->
+	# 		!isNaN(v)
+	# 	i = 0
+	# 	l = arrs.length
+	# 	while i < l
+	# 		toplevel.push Math.min.apply(window, arrs[i].filter(f))
+	# 		i++
+	# 	Math.min.apply window, toplevel
 	arrmax = (arrs) ->
 		toplevel = []
-		f = (v) ->
-			!isNaN(v)
 		i = 0
 		l = arrs.length
 		while i < l
-			toplevel.push Math.max.apply(window, arrs[i].filter(f))
+			toplevel.push Math.max.apply(window, arrs[i])
 			i++
 		Math.max.apply window, toplevel
 	arrmin = (arrs) ->
 		toplevel = []
-		f = (v) ->
-			!isNaN(v)
 		i = 0
 		l = arrs.length
 		while i < l
-			toplevel.push Math.min.apply(window, arrs[i].filter(f))
+			toplevel.push Math.min.apply(window, arrs[i])
 			i++
 		Math.min.apply window, toplevel
 
@@ -120,7 +152,7 @@ The following are done up to dig into nested arrays. From [StackOverflow](http:/
 			i += 1
 		[m, numeric.transpose(m)]
 
-The first function is a core function we'll wrap up for clarity. This is based on [Gabriel Peyre](http://www.mathworks.com/matlabcentral/fileexchange/5103-toolbox-diffc/content/toolbox_diffc/toolbox/rescale.m)'s 2004 `rescale.m`, which uses a BSD license.
+The rescale function is a core function we'll wrap up for clarity. This is based on [Gabriel Peyre](http://www.mathworks.com/matlabcentral/fileexchange/5103-toolbox-diffc/content/toolbox_diffc/toolbox/rescale.m)'s 2004 `rescale.m`, which uses a BSD license.
 
 	rescale_core = (y, a, b, m, M) ->
 		y if M - m < .0000001

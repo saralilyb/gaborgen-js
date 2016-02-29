@@ -2,12 +2,21 @@
 var arrmax, arrmin, deg2rad, gaborgen, meshgrid, pi, rescale, rescale_core;
 
 gaborgen = function(tilt, sf) {
-  var a, aspectratio, b, background, contrast, gab_x, gab_y, grayval, gridArray, i, j, m, multConst, p, phase, preSinWave, ref, reso, sc, scaledM, sinWave, varScale, x, x_centered, x_factor, y, y_centered, y_factor;
+  var a, aspectratio, b, background, contrast, gab_x, gab_y, grayval, gridArray, i, j, m, multConst, p, phase, preSinWave, ref, reso, sc, scaledM, sf_max, sf_min, sinWave, tilt_max, tilt_min, varScale, x, x_centered, x_factor, y, y_centered, y_factor;
+  if ((tilt > 100 || tilt < 1) || (sf > 100 || sf < 1)) {
+    console.log("ERROR: gaborgen arguenment input out of bounds");
+  }
   reso = 400;
   phase = 0;
   sc = 50.0;
   contrast = 100.0;
   aspectratio = 1.0;
+  tilt_min = 0;
+  tilt_max = 90;
+  sf_min = .01;
+  sf_max = .1;
+  tilt = rescale_core(tilt, tilt_min, tilt_max, 1, 100);
+  sf = rescale_core(sf, sf_min, sf_max, 1, 100);
   x = reso / 2;
   y = reso / 2;
   a = numeric.cos([deg2rad(tilt)]) * sf * 360;
@@ -56,30 +65,24 @@ deg2rad = function(degrees) {
 };
 
 arrmax = function(arrs) {
-  var f, i, l, toplevel;
+  var i, l, toplevel;
   toplevel = [];
-  f = function(v) {
-    return !isNaN(v);
-  };
   i = 0;
   l = arrs.length;
   while (i < l) {
-    toplevel.push(Math.max.apply(window, arrs[i].filter(f)));
+    toplevel.push(Math.max.apply(window, arrs[i]));
     i++;
   }
   return Math.max.apply(window, toplevel);
 };
 
 arrmin = function(arrs) {
-  var f, i, l, toplevel;
+  var i, l, toplevel;
   toplevel = [];
-  f = function(v) {
-    return !isNaN(v);
-  };
   i = 0;
   l = arrs.length;
   while (i < l) {
-    toplevel.push(Math.min.apply(window, arrs[i].filter(f)));
+    toplevel.push(Math.min.apply(window, arrs[i]));
     i++;
   }
   return Math.min.apply(window, toplevel);
@@ -107,3 +110,5 @@ rescale_core = function(y, a, b, m, M) {
 rescale = function(y, a, b) {
   return rescale_core(y, a, b, arrmin(y), arrmax(y));
 };
+
+//# sourceMappingURL=gab.js.map
