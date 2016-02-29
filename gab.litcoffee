@@ -73,22 +73,23 @@ Now we have a matrix of values. Matlab has the wonderful and magical `imshow` co
 
 Now we create a PNG element and loop through it, changing each pixel's color. Uses [PNGlib](http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/), which has a BSD license.
 
-		p = new PNGlib(reso, reso, 256)
-		# construcor takes height, weight and color-depth
-		background = p.color(0, 0, 0, 0)
-		# set the background transparent
-		i = 0
-		while i < reso
-			j = 0
-			while j < reso
-				grayval = scaledM[i][j]
-				p.buffer[p.index(i, j)] = p.color(grayval, grayval, grayval)
-				j++
-			i++
+		# p = new PNGlib(reso, reso, 256)
+		# # construcor takes height, weight and color-depth
+		# background = p.color(0, 0, 0, 0)
+		# # set the background transparent
+		# i = 0
+		# while i < reso
+		# 	j = 0
+		# 	while j < reso
+		# 		grayval = scaledM[i][j]
+		# 		p.buffer[p.index(i, j)] = p.color(grayval, grayval, grayval)
+		# 		j++
+		# 	i++
 
 Finally, write it out to the DOM.
 
-		$('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">')
+		# $('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">')
+		$('#gab-target').html('<img src="' + numeric.imageURL([scaledM,scaledM,scaledM]) + '"/>')
 
 ## Helper functions
 
@@ -98,28 +99,8 @@ Start with some helper functions. This function converts degrees to radians.
 	deg2rad = (degrees) ->
 		(degrees * pi) / 180
 
-The following are done up to dig into nested arrays. From [StackOverflow](http://stackoverflow.com/questions/10564441/how-to-find-the-max-min-of-a-nested-array-in-javascript).
+The following are done up to dig into nested arrays and find the max or min values in them. From [StackOverflow](http://stackoverflow.com/questions/10564441/how-to-find-the-max-min-of-a-nested-array-in-javascript).
 
-	# arrmax = (arrs) ->
-	# 	toplevel = []
-	# 	f = (v) ->
-	# 		!isNaN(v)
-	# 	i = 0
-	# 	l = arrs.length
-	# 	while i < l
-	# 		toplevel.push Math.max.apply(window, arrs[i].filter(f))
-	# 		i++
-	# 	Math.max.apply window, toplevel
-	# arrmin = (arrs) ->
-	# 	toplevel = []
-	# 	f = (v) ->
-	# 		!isNaN(v)
-	# 	i = 0
-	# 	l = arrs.length
-	# 	while i < l
-	# 		toplevel.push Math.min.apply(window, arrs[i].filter(f))
-	# 		i++
-	# 	Math.min.apply window, toplevel
 	arrmax = (arrs) ->
 		toplevel = []
 		i = 0

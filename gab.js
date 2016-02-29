@@ -2,7 +2,7 @@
 var arrmax, arrmin, deg2rad, gaborgen, meshgrid, pi, rescale, rescale_core;
 
 gaborgen = function(tilt, sf) {
-  var a, aspectratio, b, background, contrast, gab_x, gab_y, grayval, gridArray, i, j, m, multConst, p, phase, preSinWave, ref, reso, sc, scaledM, sf_max, sf_min, sinWave, tilt_max, tilt_min, varScale, x, x_centered, x_factor, y, y_centered, y_factor;
+  var a, aspectratio, b, contrast, gab_x, gab_y, gridArray, i, j, m, multConst, phase, preSinWave, ref, reso, sc, scaledM, sf_max, sf_min, sinWave, tilt_max, tilt_min, varScale, x, x_centered, x_factor, y, y_centered, y_factor;
   if ((tilt > 100 || tilt < 1) || (sf > 100 || sf < 1)) {
     console.log("ERROR: gaborgen arguenment input out of bounds");
   }
@@ -43,19 +43,7 @@ gaborgen = function(tilt, sf) {
   m = numeric.add(.5, numeric.mul(contrast, numeric.transpose(numeric.mul(numeric.mul(multConst, numeric.exp(numeric.add(numeric.div(x_factor, varScale), numeric.div(y_factor, varScale)))), sinWave))));
   scaledM = rescale(m, 0, 255);
   scaledM = numeric.transpose(scaledM);
-  p = new PNGlib(reso, reso, 256);
-  background = p.color(0, 0, 0, 0);
-  i = 0;
-  while (i < reso) {
-    j = 0;
-    while (j < reso) {
-      grayval = scaledM[i][j];
-      p.buffer[p.index(i, j)] = p.color(grayval, grayval, grayval);
-      j++;
-    }
-    i++;
-  }
-  return $('#gab-target').html('<img src="data:image/png;base64,' + p.getBase64() + '">');
+  return $('#gab-target').html('<img src="' + numeric.imageURL([scaledM, scaledM, scaledM]) + '"/>');
 };
 
 pi = 3.1416;
