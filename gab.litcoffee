@@ -1,9 +1,5 @@
 # Gabor patch generator
 
-TODO:
-
-- Make gaborgen take frequency and rotation values 0 to 100 instead of specific values within their given scale.
-
 ## The main generating function
 
 Lay groundwork. Right now this assumes square gabor patches. This makes heavy use of [numeric.js](http://numeric.js). This is a construction based on the OCTAVE/MATLAB code from Wikipedia.
