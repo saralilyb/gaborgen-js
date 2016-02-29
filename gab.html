@@ -11,14 +11,6 @@
 		<link rel="stylesheet" href="css/jquery-ui.css">
 		<script src="gab.js"></script>
 		<script>
-			$(function() {
-    		$( "input[type=submit], a, button" )
-      		.button()
-      		.click(function( event ) {
-						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
-        		event.preventDefault();
-      	});
-  		});
 		  $(function() {
 		    $( "#frequency-slider" ).slider({
 		      range: "max",
@@ -61,12 +53,11 @@
 		</p>
 		<div id="frequency-slider" align="center" style="width:300px; text-align: center;"></div>
 		<br/>
-		<input type="submit" value="generate"></input>
 		<br/>
 		<div id='gab-target', align="center", style="text-align: center;"></div>
 
 		<script>
-			gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+			gaborgen(45, .05); // initialize
 		</script>
 
 		<noscript>
