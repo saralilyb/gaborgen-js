@@ -1,6 +1,0 @@
-[submodule "js/jsPsych"]
-	path = js/jsPsych
-	url = https://github.com/jodeleeuw/jsPsych.git
-[submodule "static/js/jsPsych"]
-	path = static/js/jsPsych
-	url = https://github.com/jodeleeuw/jsPsych.git
