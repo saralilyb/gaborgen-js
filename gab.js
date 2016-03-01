@@ -42,7 +42,7 @@ gaborgen = function(tilt, sf) {
   sinWave = numeric.sin(preSinWave);
   m = numeric.add(.5, numeric.mul(contrast, numeric.transpose(numeric.mul(numeric.mul(multConst, numeric.exp(numeric.add(numeric.div(x_factor, varScale), numeric.div(y_factor, varScale)))), sinWave))));
   scaledM = rescale(m, 0, 255);
-  return $('#gab-target').html('<img src="' + numeric.imageURL([scaledM, scaledM, scaledM]) + '"/>');
+  return numeric.imageURL([scaledM, scaledM, scaledM]);
 };
 
 pi = 3.1416;

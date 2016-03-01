@@ -1,5 +1,7 @@
 # Gabor patch generator
 
+CoffeeScript/JavaScript Gabor patch generator. The function takes values for rotation and frequency between 1 and 100 and outputs an image URL for a Gabor patch with rotation values between 0 and 90 degrees and frequency between .01 and .1. Makes *heavy* use of [numeric.js](http://numeric.js).
+
 ## The main generating function
 
 Lay groundwork. Right now this assumes square gabor patches. This makes heavy use of [numeric.js](http://numeric.js). This is a construction based on the OCTAVE/MATLAB code from Wikipedia.
@@ -68,9 +70,9 @@ Now we have a matrix of values. Matlab has the wonderful and magical `imshow` co
 
 # Display the picture.
 
-Finally, write it out to the DOM. Numeric has a function that returns the base64 version of a PNG. It's kinda malformed because MATLAB doesn't want to import it, and it's slightly different from PNGlib's, but it's twice as fast.
+Finally, write it out. Numeric has a function that returns the base64 version of a PNG. It's kinda malformed because MATLAB doesn't want to import it, and it's slightly different from PNGlib's, but it's twice as fast. Putting the image into the DOM is handled in the HTML to make this function more general purpose.
 
-		$('#gab-target').html('<img src="' + numeric.imageURL([scaledM,scaledM,scaledM]) + '"/>')
+		return numeric.imageURL([scaledM,scaledM,scaledM])
 
 ## Helper functions
 

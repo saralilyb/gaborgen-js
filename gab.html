@@ -18,7 +18,7 @@
 					step: 1,
 		      slide: function( event, ui ) {
 		        $( "#frequency" ).val( ui.value );
-						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+						$('#gab-target').html('<img src="' + 						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val())) + '"/>'); // initialize
 		      }
 		    });
 		    $( "#frequency" ).val( $( "#frequency-slider" ).slider( "value" ) );
@@ -32,7 +32,7 @@
 					step: 1,
 					slide: function( event, ui ) {
 						$( "#rotation" ).val( ui.value );
-						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val()));
+						$('#gab-target').html('<img src="' + 						gaborgen(parseFloat($('#rotation').val()), parseFloat($('#frequency').val())) + '"/>'); // initialize
 					}
 				});
 				$( "#rotation" ).val( $( "#rotation-slider" ).slider( "value" ) );
@@ -56,7 +56,7 @@
 			<div id='gab-target', align="center", style="text-align: center;"></div>
 		</div>
 		<script>
-			gaborgen(50, 50); // initialize
+			$('#gab-target').html('<img src="' + gaborgen(50, 50) + '"/>');
 		</script>
 
 		<noscript>
