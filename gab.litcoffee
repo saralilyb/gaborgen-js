@@ -1,10 +1,10 @@
 # Gabor patch generator
 
-CoffeeScript/JavaScript Gabor patch generator. The function takes values for rotation and frequency between 1 and 100 and outputs an image URL for a Gabor patch with rotation values between 0 and 90 degrees and frequency between .01 and .1. Makes *heavy* use of [numeric.js](http://numeric.js).
+CoffeeScript/JavaScript Gabor patch generator. The function takes values for rotation and frequency between 1 and 100 and outputs an image URL for a Gabor patch with rotation values between 0 and 90 degrees and frequency between .01 and .1. Makes *heavy* use of [numeric.js](http://numeric.js). You can remove the final call to `numeric.imageURL` (and/or the final call to `rescale`) to get the matrix itself. This code is *very* fast given, well, JavaScript. On my machine the math takes about 250ms, while MATLAB's routines take about 115ms. 
 
 ## The main generating function
 
-Lay groundwork. Right now this assumes square gabor patches. This makes heavy use of [numeric.js](http://numeric.js). This is a construction based on the OCTAVE/MATLAB code from Wikipedia.
+The core of this function is a construction based on the OCTAVE/MATLAB code from Wikipedia.
 
 Start with a function definition. This takes takes values for rotation and frequency from 0 to 100, scaling them within the ranges defined below.
 
