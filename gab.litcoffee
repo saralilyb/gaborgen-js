@@ -1,6 +1,6 @@
 # Gabor patch generator
 
-CoffeeScript/JavaScript Gabor patch generator. The function takes values for rotation and frequency between 1 and 100 and outputs an image URL for a Gabor patch with rotation values between 0 and 90 degrees and frequency between .01 and .1. Makes *heavy* use of [numeric.js](http://numeric.js). You can remove the final call to `numeric.imageURL` (and/or the final call to `rescale`) to get the matrix itself. This code is *very* fast given, well, JavaScript. On my machine the math takes about 250ms, while MATLAB's routines take about 115ms. 
+CoffeeScript/JavaScript Gabor patch generator. The function takes values for rotation and frequency between 1 and 100 and outputs an image URL for a Gabor patch with rotation values between 0 and 90 degrees and frequency between .01 and .1. Makes *heavy* use of [numeric.js](http://numeric.js). You can remove the final call to `numeric.imageURL` (and/or the final call to `rescale`) to get the matrix itself. This code is *very* fast given, well, JavaScript. On my machine the math takes about 250ms, while MATLAB's routines take about 115ms.
 
 ## The main generating function
 
@@ -66,7 +66,7 @@ There. Now, let's continue.
 
 Now we have a matrix of values. Matlab has the wonderful and magical `imshow` command that just takes the matrix and makes a picture. We have to do that magic ourselves. So to use the matrix `m` in the pnglib code below, we have to rescale all the values to be between 0 and 255, the intensity values for each pixel. Finally, we rescale the image matrix to be between 0 and 255.
 
-		scaledM = rescale(m, 0, 255)
+		scaledM = rescale(m, 0, 254)
 
 # Display the picture.
 
